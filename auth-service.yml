@@ -36,3 +36,25 @@ eureka:
     client:
         service-url:
             defaultZone: http://localhost:8761/eureka
+    instance:
+        hostname: localhost
+        prefer-ip-address: false
+        secure-port-enabled: true
+        non-secure-port-enabled: false  # Desactiva el puerto no seguro
+        
+        # URLs específicas para health checks con HTTPS:
+        status-page-url: https://${eureka.instance.hostname}:${server.port}/actuator/info
+        health-check-url: https://${eureka.instance.hostname}:${server.port}/actuator/health
+        home-page-url: https://${eureka.instance.hostname}:${server.port}/
+
+management:
+  # Exponer endpoints actuator
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,loggers,threaddump,heapdump
+    
+  # Mostrar detalles de health  
+  endpoint:
+    health:
+      show-details: always
